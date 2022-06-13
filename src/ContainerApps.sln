@@ -5,6 +5,16 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ingestion.API", "Ingestion.API\Ingestion.API.csproj", "{27281682-3733-4167-933E-4A6C53A70F00}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "actions", "actions", "{E5998444-7E8B-4FAB-B849-9E6F9AA67637}"
+ProjectSection(SolutionItems) = preProject
+	..\.github\workflows\build.yml = ..\.github\workflows\build.yml
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{C0B2DAFE-EE7D-402F-94FE-A1A3F06B0340}"
+ProjectSection(SolutionItems) = preProject
+	..\docker-compose.yml = ..\docker-compose.yml
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
