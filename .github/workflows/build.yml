@@ -7,6 +7,7 @@ on:
 
 env:
   INGESTIONAPI_IMAGENAME: ingestion-api
+  CALCULATIONAPI_IMAGENAME: calculation-api
 
 jobs:
   build:
@@ -42,4 +43,14 @@ jobs:
           build-args: |
             version=${{ steps.tag.outputs.tag }}
           tags: "${{ secrets.ACR_ENDPOINT }}/${{ env.INGESTIONAPI_IMAGENAME }}:${{ steps.gitversion.outputs.Major }}.${{ steps.gitversion.outputs.Minor }}.${{ steps.gitversion.outputs.CommitsSinceVersionSource }}"
+          
+      - name: Build & Push
+        uses: docker/build-push-action@v2
+        with:
+          file: ./src/Calculation.API/Dockerfile
+          context: .
+          push: true
+          build-args: |
+            version=${{ steps.tag.outputs.tag }}
+          tags: "${{ secrets.ACR_ENDPOINT }}/${{ env.CALCULATIONAPI_IMAGENAME }}:${{ steps.gitversion.outputs.Major }}.${{ steps.gitversion.outputs.Minor }}.${{ steps.gitversion.outputs.CommitsSinceVersionSource }}"          
 
