@@ -25,7 +25,7 @@ jobs:
 
       - name: Determine Version
         id: gitversion
-        uses: gittools/actions/gitversion/execute@v0.9.7       
+        uses: gittools/actions/gitversion/execute@v0.9.7
 
       - name: Log into registry
         uses: docker/login-action@v1
@@ -43,7 +43,7 @@ jobs:
           build-args: |
             version=${{ steps.tag.outputs.tag }}
           tags: "${{ secrets.ACR_ENDPOINT }}/${{ env.INGESTIONAPI_IMAGENAME }}:${{ steps.gitversion.outputs.Major }}.${{ steps.gitversion.outputs.Minor }}.${{ steps.gitversion.outputs.CommitsSinceVersionSource }}"
-          
+
       - name: Build & Push
         uses: docker/build-push-action@v2
         with:
@@ -56,7 +56,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: [build]
+    needs: [ build ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
