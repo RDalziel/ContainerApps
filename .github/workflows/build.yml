@@ -70,7 +70,7 @@ jobs:
         uses: azure/CLI@v1
         with:
           inlineScript: |
-            az group create -g ${{ secrets.RESOURCE_GROUP }} -l ukwest
+            az group create -g ${{ secrets.RESOURCE_GROUP }} -l uksouth
             az deployment group create -g ${{ secrets.RESOURCE_GROUP }} -f ./deploy/main.bicep \
              -p \
                 minReplicas=0 \
