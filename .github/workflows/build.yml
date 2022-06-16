@@ -48,7 +48,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           file: ./src/Calculation.API/Dockerfile
-          context: /src/Calculation,API
+          context: ./src/Calculation.API
           push: true
           build-args: |
             version=${{ steps.tag.outputs.tag }}
