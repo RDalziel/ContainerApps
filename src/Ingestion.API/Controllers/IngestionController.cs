@@ -30,5 +30,18 @@ namespace Ingestion.API.Controllers
 
             return Ok(fileName);
         }
+
+        [HttpPost] public IActionResult AvailableDataFiles()
+        {
+            var dataPath = _fileDirectory.GetDataDirectory();
+
+            var files = Directory.EnumerateFiles(dataPath);
+
+            return Ok(new 
+            {
+                dataPath,
+                files
+            });
+        }
     }
 }
