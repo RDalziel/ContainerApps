@@ -21,7 +21,7 @@ param containerRegistryPassword string = ''
 var registryPassword = 'registry-password'
 
 resource storage 'Microsoft.Storage/storageAccounts@2021-04-01' = {
-  name: replace('${environmentName}-storage', '-', '')
+  name: replace('${environmentName}', '-', '')
   location: location
   sku: {
     name: 'Standard_LRS'
