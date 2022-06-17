@@ -66,6 +66,7 @@ module pythonService 'container-app-http.bicep' = {
     containerRegistry: containerRegistry
     registryPassword: registryPassword
     containerRegistryUsername: containerRegistryUsername
+    storageShareName: storageShareName
     secrets: [
       {
         name: registryPassword

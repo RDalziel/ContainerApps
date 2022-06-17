@@ -12,7 +12,7 @@ param registryPassword string
 param minReplicas int = 0
 param secrets array = []
 param env array = []
-
+param storageShareName string
 
 resource environment 'Microsoft.App/managedEnvironments@2022-03-01' existing = {
   name: environmentName
@@ -65,8 +65,7 @@ resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
       {
         name: 'azure-files-volume'
         storageType: 'AzureFile'
-        storageName: 'data'
-   
+        storageName: storageShareName
       }
     ]
     }
