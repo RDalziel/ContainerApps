@@ -49,6 +49,12 @@ resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
           image: containerImage
           name: containerAppName
           env: env
+          volumeMounts: [
+            {
+              mountPath: '/data'
+              volumeName: 'azure-files-volume'
+            }
+          ]
         }
       ]
       scale: {
@@ -60,7 +66,7 @@ resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
         name: 'azure-files-volume'
         storageType: 'AzureFile'
         storageName: '${environmentName}-share'
-       
+   
       }
     ]
     }
