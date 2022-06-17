@@ -20,7 +20,7 @@ param containerRegistryPassword string = ''
 
 var registryPassword = 'registry-password'
 
-var storageShareName = 'mountedvolume'
+var storageShareName = 'data'
 
 
 resource storage 'Microsoft.Storage/storageAccounts@2021-04-01' = {
