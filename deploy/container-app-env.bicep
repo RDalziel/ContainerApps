@@ -52,6 +52,7 @@ resource environment_storage 'Microsoft.App/managedEnvironments/storages@2022-03
       accountKey: storageAccountKey
       accountName: storageAccountName
       shareName: storageShareName
+      accessMode: 'ReadWrite'
     }
   }
 }
