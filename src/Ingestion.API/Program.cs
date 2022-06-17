@@ -4,7 +4,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 var configBuilder = new ConfigurationBuilder();
+
+#if DEBUG
+configBuilder.AddJsonFile("appsettings.development.json");
+#endif
 configBuilder.AddJsonFile("appsettings.json");
+configBuilder.AddEnvironmentVariables();
+
+
 var configuration = configBuilder.Build();
 
 var builder = WebApplication.CreateBuilder(args);

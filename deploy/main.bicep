@@ -101,7 +101,7 @@ module dotnetService 'container-app-http.bicep' = {
       }
       {
         name: 'FileShareBasePath'
-        value: '\\${storageShareDirectory}'
+        value: '\\\\${storageShareDirectory}'
       }
      ]
     secrets: isPrivateRegistry ? [
