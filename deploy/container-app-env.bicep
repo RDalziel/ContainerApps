@@ -45,7 +45,7 @@ resource environment 'Microsoft.App/managedEnvironments@2022-03-01' = {
 }
 
 resource environment_storage 'Microsoft.App/managedEnvironments/storages@2022-03-01' = {
-  name: '${environment}-share'
+  name: '${environmentName}-share'
   parent: environment
   properties: {
     azureFile: {

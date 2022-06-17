@@ -107,9 +107,5 @@ module dotnetService 'container-app-http.bicep' = {
   }
 }
 
-
-
-
-
 output dotnetFqdn string = dotnetService.outputs.fqdn
 output pythonFqdn string = pythonService.outputs.fqdn
