@@ -65,7 +65,7 @@ resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
       {
         name: 'azure-files-volume'
         storageType: 'AzureFile'
-        storageName: '${environmentName}-share'
+        storageName: 'mountedvolume'
    
       }
     ]
