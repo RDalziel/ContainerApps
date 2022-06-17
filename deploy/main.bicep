@@ -20,6 +20,8 @@ param containerRegistryPassword string = ''
 
 var registryPassword = 'registry-password'
 
+var storageShareDirectory = 'data'
+
 resource storage 'Microsoft.Storage/storageAccounts@2021-04-01' = {
   name: replace('${environmentName}', '-', '')
   location: location
@@ -41,7 +43,7 @@ module environment 'container-app-env.bicep' = {
     logAnalyticsWorkspaceName: '${environmentName}-la'
     storageAccountName: storage.name
     storageAccountKey: storage.listKeys().keys[0].value
-    storageShareName: 'data'
+    storageShareName: storageShareDirectory
   }
 }
 
@@ -96,6 +98,10 @@ module dotnetService 'container-app-http.bicep' = {
       {
        name: 'pythonServiceEndpoint'
        value: pythonService.outputs.fqdn
+      }
+      {
+        name: 'FileShareBasePath'
+        value: '\\${storageShareDirectory}'
       }
      ]
     secrets: isPrivateRegistry ? [

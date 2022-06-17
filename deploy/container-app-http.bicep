@@ -55,6 +55,14 @@ resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
         minReplicas: minReplicas
         maxReplicas: 1
       }
+      volumes:[
+      {
+        name: 'azure-files-volume'
+        storageType: 'AzureFile'
+        storageName: '${environmentName}-share'
+       
+      }
+    ]
     }
   }
 }
