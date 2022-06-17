@@ -7,7 +7,6 @@ resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-12
   name: logAnalyticsWorkspaceName
   location: location
   properties: any({
-    retentionInDays: 30
     features: {
       searchVersion: 1
     }
@@ -31,7 +30,7 @@ resource environment 'Microsoft.App/managedEnvironments@2022-03-01' = {
   name: environmentName
   location: location
   properties: {
-    daprAIInstrumentationKey:appInsights.properties.InstrumentationKey
+    daprAIInstrumentationKey: appInsights.properties.InstrumentationKey
     appLogsConfiguration: {
       destination: 'log-analytics'
       logAnalyticsConfiguration: {
