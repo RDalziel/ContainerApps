@@ -20,6 +20,8 @@ param containerRegistryPassword string = ''
 
 var registryPassword = 'registry-password'
 
+var storageShareName = 'mountedvolume'
+
 
 resource storage 'Microsoft.Storage/storageAccounts@2021-04-01' = {
   name: replace('${environmentName}', '-', '')
@@ -42,7 +44,7 @@ module environment 'container-app-env.bicep' = {
     logAnalyticsWorkspaceName: '${environmentName}-la'
     storageAccountName: storage.name
     storageAccountKey: storage.listKeys().keys[0].value
-    storageShareName: storageShareDirectory
+    storageShareName: storageShareName
   }
 }
 
