@@ -13,6 +13,8 @@ jobs:
   build:
     name: Build Container Images
     runs-on: ubuntu-latest
+    outputs: 
+      containerVersion: ${{ steps.ContainerVersion.outputs.Version }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -26,6 +28,10 @@ jobs:
       - name: Determine Version
         id: gitversion
         uses: gittools/actions/gitversion/execute@v0.9.7
+
+      steps:
+      - id: ContainerVersion
+        run: echo "::set-output name=Version::${{ steps.gitversion.outputs.Major }}.${{ steps.gitversion.outputs.Minor }}.${{ steps.gitversion.outputs.CommitsSinceVersionSource }}"
 
       - name: Log into registry
         uses: docker/login-action@v1
@@ -42,7 +48,7 @@ jobs:
           push: true
           build-args: |
             version=${{ steps.tag.outputs.tag }}
-          tags: "${{ secrets.ACR_ENDPOINT }}/${{ env.INGESTIONAPI_IMAGENAME }}:${{ steps.gitversion.outputs.Major }}.${{ steps.gitversion.outputs.Minor }}.${{ steps.gitversion.outputs.CommitsSinceVersionSource }}"
+          tags: "${{ secrets.ACR_ENDPOINT }}/${{ env.INGESTIONAPI_IMAGENAME }}:${{ steps.ContainerVersion.outputs.Version }}"
 
       - name: Build & Push
         uses: docker/build-push-action@v2
@@ -52,7 +58,7 @@ jobs:
           push: true
           build-args: |
             version=${{ steps.tag.outputs.tag }}
-          tags: "${{ secrets.ACR_ENDPOINT }}/${{ env.CALCULATIONAPI_IMAGENAME }}:${{ steps.gitversion.outputs.Major }}.${{ steps.gitversion.outputs.Minor }}.${{ steps.gitversion.outputs.CommitsSinceVersionSource }}"
+          tags: "${{ secrets.ACR_ENDPOINT }}/${{ env.CALCULATIONAPI_IMAGENAME }}:${{ steps.ContainerVersion.outputs.Version }}"
 
   deploy:
     runs-on: ubuntu-latest
@@ -74,9 +80,9 @@ jobs:
             az deployment group create -g ${{ secrets.RESOURCE_GROUP }} -f ./deploy/main.bicep \
              -p \
                 minReplicas=0 \
-                dotnetImage='${{ secrets.ACR_ENDPOINT }}/${{ env.INGESTIONAPI_IMAGENAME }}:${{ steps.gitversion.outputs.Major }}.${{ steps.gitversion.outputs.Minor }}.${{ steps.gitversion.outputs.CommitsSinceVersionSource }}' \
+                dotnetImage='${{ secrets.ACR_ENDPOINT }}/${{ env.INGESTIONAPI_IMAGENAME }}:${{needs.build.outputs.containerVersion}}' \
                 dotnetPort=5000 \
-                pythonImage='${{ secrets.ACR_ENDPOINT }}/${{ env.CALCULATIONAPI_IMAGENAME }}:${{ steps.gitversion.outputs.Major }}.${{ steps.gitversion.outputs.Minor }}.${{ steps.gitversion.outputs.CommitsSinceVersionSource }}' \
+                pythonImage='${{ secrets.ACR_ENDPOINT }}/${{ env.CALCULATIONAPI_IMAGENAME }}:${{needs.build.outputs.containerVersion}}' \
                 pythonPort=8000 \
                 containerRegistry=${{ secrets.ACR_ENDPOINT }} \
                 containerRegistryUsername=${{ secrets.ACR_USERNAME }} \
