@@ -29,7 +29,6 @@ jobs:
         id: gitversion
         uses: gittools/actions/gitversion/execute@v0.9.7
 
-      steps:
       - id: ContainerVersion
         run: echo "::set-output name=Version::${{ steps.gitversion.outputs.Major }}.${{ steps.gitversion.outputs.Minor }}.${{ steps.gitversion.outputs.CommitsSinceVersionSource }}"
 
