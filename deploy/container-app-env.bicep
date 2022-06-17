@@ -2,6 +2,9 @@ param environmentName string
 param logAnalyticsWorkspaceName string
 param appInsightsName string
 param location string
+param storageAccountName string
+param storageAccountKey string
+param storageShareName string
 
 resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-12-01-preview' = {
   name: logAnalyticsWorkspaceName
@@ -37,6 +40,18 @@ resource environment 'Microsoft.App/managedEnvironments@2022-03-01' = {
         customerId: logAnalyticsWorkspace.properties.customerId
         sharedKey: logAnalyticsWorkspace.listKeys().primarySharedKey
       }
+    }
+  }
+}
+
+resource environment_storage 'Microsoft.App/managedEnvironments/storages@2022-03-01' = {
+  name: '${environment}-share'
+  parent: environment
+  properties: {
+    azureFile: {
+      accountKey: storageAccountKey
+      accountName: storageAccountName
+      shareName: storageShareName
     }
   }
 }

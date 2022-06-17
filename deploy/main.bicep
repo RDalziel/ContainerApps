@@ -20,8 +20,18 @@ param containerRegistryPassword string = ''
 
 var registryPassword = 'registry-password'
 
+resource storage 'Microsoft.Storage/storageAccounts@2021-04-01' = {
+  name: '${environmentName}-storage'
+  location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
+  kind: 'StorageV2'
+  properties: {
+    supportsHttpsTrafficOnly: true
+  }
+}
 
-// Container Apps Environment 
 module environment 'container-app-env.bicep' = {
   name: '${deployment().name}--environment'
   params: {
@@ -29,6 +39,9 @@ module environment 'container-app-env.bicep' = {
     location: location
     appInsightsName: '${environmentName}-ai'
     logAnalyticsWorkspaceName: '${environmentName}-la'
+    storageAccountName: storage.name
+    storageAccountKey: storage.listKeys().keys[0].value
+    storageShareName: 'data'
   }
 }
 
