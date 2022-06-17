@@ -51,7 +51,7 @@ resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
           env: env
           volumeMounts: [
             {
-              mountPath: '/data'
+              mountPath: '/share'
               volumeName: 'azure-files-volume'
             }
           ]

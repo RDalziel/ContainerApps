@@ -20,7 +20,6 @@ param containerRegistryPassword string = ''
 
 var registryPassword = 'registry-password'
 
-var storageShareDirectory = 'data'
 
 resource storage 'Microsoft.Storage/storageAccounts@2021-04-01' = {
   name: replace('${environmentName}', '-', '')
@@ -101,7 +100,7 @@ module dotnetService 'container-app-http.bicep' = {
       }
       {
         name: 'FileShareBasePath'
-        value: '/${storageShareDirectory}'
+        value: '/share'
       }
      ]
     secrets: isPrivateRegistry ? [
