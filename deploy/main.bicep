@@ -39,7 +39,7 @@ module pythonService 'container-app-http.bicep' = {
   ]
   params: {
     enableIngress: true
-    isExternalIngress: false
+    isExternalIngress: true
     location: location
     environmentName: environmentName
     containerAppName: pythonServiceAppName
@@ -50,7 +50,6 @@ module pythonService 'container-app-http.bicep' = {
     containerRegistry: containerRegistry
     registryPassword: registryPassword
     containerRegistryUsername: containerRegistryUsername
-
     secrets: [
       {
         name: registryPassword
@@ -60,14 +59,16 @@ module pythonService 'container-app-http.bicep' = {
   }
 }
 
+
 module dotnetService 'container-app-http.bicep' = {
   name: '${deployment().name}--${dotnetServiceAppName}'
   dependsOn: [
     environment
+    pythonService
   ]
   params: {
     enableIngress: true
-    isExternalIngress: false
+    isExternalIngress: true
     location: location
     environmentName: environmentName
     containerAppName: dotnetServiceAppName
@@ -78,6 +79,12 @@ module dotnetService 'container-app-http.bicep' = {
     containerRegistry: containerRegistry
     registryPassword: registryPassword
     containerRegistryUsername: containerRegistryUsername
+    env:[
+      {
+       name: 'pythonServiceEndpoint'
+       value: pythonService.outputs.fqdn
+      }
+     ]
     secrets: isPrivateRegistry ? [
       {
         name: registryPassword
@@ -86,6 +93,9 @@ module dotnetService 'container-app-http.bicep' = {
     ] : []
   }
 }
+
+
+
 
 
 output dotnetFqdn string = dotnetService.outputs.fqdn
