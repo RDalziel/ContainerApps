@@ -44,7 +44,7 @@ module environment 'container-app-env.bicep' = {
     logAnalyticsWorkspaceName: '${environmentName}-la'
     storageAccountName: storage.name
     storageAccountKey: storage.listKeys().keys[0].value
-    storageShareName: 'fileshare'
+    storageShareName: 'data'
   }
 }
 
