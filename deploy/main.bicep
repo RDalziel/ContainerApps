@@ -96,7 +96,7 @@ module dotnetService 'container-app-http.bicep' = {
     containerRegistry: containerRegistry
     registryPassword: registryPassword
     containerRegistryUsername: containerRegistryUsername
-    storageShareName: storageShareName
+    storageShareName: sharedStorageName
     env:[
       {
        name: 'pythonServiceEndpoint'
