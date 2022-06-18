@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 import os
 import pandas as pd
+from opencensus.ext.azure.common.protocol import Request
 from opencensus.ext.azure.trace_exporter import AzureExporter
 from opencensus.trace.samplers import ProbabilitySampler
 from opencensus.trace.tracer import Tracer
