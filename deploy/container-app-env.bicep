@@ -60,3 +60,5 @@ resource environment_storage 'Microsoft.App/managedEnvironments/storages@2022-03
 
 output location string = location
 output environmentId string = environment.id
+output appInsightsConnectionString string =  appInsights.properties.ConnectionString
+output appInsightsInstrumentationKey string =  appInsights.properties.InstrumentationKey

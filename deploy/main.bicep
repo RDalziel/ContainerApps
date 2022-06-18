@@ -103,6 +103,10 @@ module dotnetService 'container-app-http.bicep' = {
        value: pythonService.outputs.fqdn
       }
       {
+        name: 'APPINSIGHTS_CONNECTION_STRING'
+        value: environment.outputs.appInsightsConnectionString
+      }
+      {
         name: 'FileShareBasePath'
         value: '/share'
       }
