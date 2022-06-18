@@ -1,5 +1,8 @@
 using System;
+using System.Globalization;
 using System.IO;
+using CsvHelper;
+using Ingestion.API.Model;
 using Ingestion.API.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -21,12 +24,20 @@ namespace Ingestion.API.Controllers
         }
         
         [HttpPost]
-        public IActionResult GenerateFile()
+        public IActionResult GenerateFile([FromQuery] int numRows = 100)
         {
             var fileName = Guid.NewGuid().ToString();
 
             var dataPath = _fileDirectory.GetDataDirectory();
-            System.IO.File.Create(Path.Join(dataPath, fileName));
+            using var writer = new StreamWriter(Path.Join(dataPath, fileName));
+            using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
+            csv.WriteHeader<Person>();
+            csv.NextRecord();
+            for (var i = 0; i < numRows; i++)
+            {
+                csv.WriteRecord(PersonFactory.GetGenericPerson());
+                csv.NextRecord();
+            }
 
             return Ok(fileName);
         }

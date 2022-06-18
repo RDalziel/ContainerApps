@@ -1,13 +1,13 @@
 from fastapi import FastAPI
+import os
+import pandas as pd
+
+FilePath = os.getenv('FileShareBasePath')
 
 app = FastAPI()
 
-
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-
-@app.get("/hello/{name}")
-async def say_hello(name: str):
-    return {"message": f"Hello {name}"}
+@app.get("/{filepath}")
+async def load_file(filepath: str):
+    path = os.path.join(FilePath, filepath)
+    df = pd.read_csv(path, dtype=str)
+    return {"numRows": len(df.index)}
