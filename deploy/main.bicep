@@ -11,6 +11,10 @@ param pythonImage string
 param pythonPort int = 8000
 var pythonServiceAppName = 'calculation-api'
 
+param rImage string
+param rPort int = 8000
+var rServiceAppName = 'model-api'
+
 param isPrivateRegistry bool = true
 
 param containerRegistry string
@@ -61,6 +65,34 @@ module pythonService 'container-app-http.bicep' = {
     containerAppName: pythonServiceAppName
     containerImage: pythonImage
     containerPort: pythonPort
+    isPrivateRegistry: isPrivateRegistry 
+    minReplicas: minReplicas
+    containerRegistry: containerRegistry
+    registryPassword: registryPassword
+    containerRegistryUsername: containerRegistryUsername
+    storageShareName: sharedStorageName
+    secrets: [
+      {
+        name: registryPassword
+        value: containerRegistryPassword
+      }
+    ]
+  }
+}
+
+module rService 'container-app-http.bicep' = {
+  name: '${deployment().name}--${rServiceAppName}'
+  dependsOn: [
+    environment
+  ]
+  params: {
+    enableIngress: true
+    isExternalIngress: true
+    location: location
+    environmentName: environmentName
+    containerAppName: rServiceAppName
+    containerImage: rImage
+    containerPort: rPort
     isPrivateRegistry: isPrivateRegistry 
     minReplicas: minReplicas
     containerRegistry: containerRegistry

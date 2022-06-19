@@ -6,10 +6,24 @@ services:
       context: .
       dockerfile: ./src/Ingestion.API/Dockerfile
     image: ingestionapi
+    environment: 
+     - FileShareBasePath="c:/temp/containerapptempdir"
+     - APPINSIGHTS_CONNECTION_STRING=InstrumentationKey=0947f34e-1547-4a2e-8f95-e721dd3f67ba
     ports:
       - 5000:5000
   calcapi:
     build: ./src/Calculation.API
     image: calculationapi
+    environment: 
+     - FileShareBasePath="c:/temp/containerapptempdir"
+     - APPINSIGHTS_CONNECTION_STRING=InstrumentationKey=0947f34e-1547-4a2e-8f95-e721dd3f67ba
     ports:
       - 8000:8000
+  modelapi:
+    build: ./src/Model.API
+    image: modelapi
+    environment: 
+     - FileShareBasePath="c:/temp/containerapptempdir"
+     - APPINSIGHTS_CONNECTION_STRING=InstrumentationKey=0947f34e-1547-4a2e-8f95-e721dd3f67ba
+    ports:
+      - 8001:8000

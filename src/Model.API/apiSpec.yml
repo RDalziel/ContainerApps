@@ -1,0 +1,11 @@
+openapi: 3.0.1
+info:
+  title: "CSV API"
+  description: |
+   Just a basic CSV API
+paths:
+  "/count":
+    post:
+      responses:
+        200:
+          description: "OK - success"
