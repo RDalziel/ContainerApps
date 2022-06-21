@@ -71,6 +71,16 @@ module pythonService 'container-app-http.bicep' = {
     registryPassword: registryPassword
     containerRegistryUsername: containerRegistryUsername
     storageShareName: sharedStorageName
+    env:[
+      {
+        name: 'APPINSIGHTS_CONNECTION_STRING'
+        value: environment.outputs.appInsightsConnectionString
+      }
+      {
+        name: 'FileShareBasePath'
+        value: '/share'
+      }
+     ]
     secrets: [
       {
         name: registryPassword
@@ -99,6 +109,16 @@ module rService 'container-app-http.bicep' = {
     registryPassword: registryPassword
     containerRegistryUsername: containerRegistryUsername
     storageShareName: sharedStorageName
+    env:[
+      {
+        name: 'APPINSIGHTS_CONNECTION_STRING'
+        value: environment.outputs.appInsightsConnectionString
+      }
+      {
+        name: 'FileShareBasePath'
+        value: '/share'
+      }
+     ]
     secrets: [
       {
         name: registryPassword

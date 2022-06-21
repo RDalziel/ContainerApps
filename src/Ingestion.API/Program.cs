@@ -32,7 +32,7 @@ builder.Services.AddOpenTelemetryTracing(builder =>
         .AddAspNetCoreInstrumentation()
         .AddAzureMonitorTraceExporter(o =>
         {
-            o.ConnectionString = configuration["ApplicationInsightsConnectionString"];
+            o.ConnectionString = configuration["APPINSIGHTS_CONNECTION_STRING"];
         });
 });
 
