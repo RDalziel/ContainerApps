@@ -3,7 +3,7 @@ param environmentName string = 'containerapps-env-prod'
 
 param minReplicas int = 0
 
-param dotnetImage string 
+param dotnetImage string
 param dotnetPort int = 5000
 var dotnetServiceAppName = 'ingestion-api'
 
@@ -65,7 +65,7 @@ module pythonService 'container-app-http.bicep' = {
     containerAppName: pythonServiceAppName
     containerImage: pythonImage
     containerPort: pythonPort
-    isPrivateRegistry: isPrivateRegistry 
+    isPrivateRegistry: isPrivateRegistry
     minReplicas: minReplicas
     containerRegistry: containerRegistry
     registryPassword: registryPassword
@@ -103,7 +103,7 @@ module rService 'container-app-http.bicep' = {
     containerAppName: rServiceAppName
     containerImage: rImage
     containerPort: rPort
-    isPrivateRegistry: isPrivateRegistry 
+    isPrivateRegistry: isPrivateRegistry
     minReplicas: minReplicas
     containerRegistry: containerRegistry
     registryPassword: registryPassword

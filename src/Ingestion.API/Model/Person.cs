@@ -71,5 +71,5 @@ namespace Ingestion.API.Model
             var random = new Random(DateTime.UtcNow.Millisecond);
             return PossibleEyeColour[random.Next(0, PossibleEyeColour.Length-1)];
         }
-    } 
+    }
 }
