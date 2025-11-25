@@ -11,9 +11,22 @@ env:
   MODELAPI_IMAGENAME: model-api
 
 jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install pre-commit
+        run: pip install pre-commit
+      - name: Run pre-commit
+        run: pre-commit run --all-files
   build:
     name: Build Container Images
     runs-on: ubuntu-latest
+    needs: [lint]
     outputs:
       containerVersion: ${{ steps.ContainerVersion.outputs.Version }}
     steps:
