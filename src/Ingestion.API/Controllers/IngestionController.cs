@@ -16,13 +16,13 @@ namespace Ingestion.API.Controllers
         private readonly IFileDirectory _fileDirectory;
         private readonly ILogger<IngestionController> _logger;
 
-        public IngestionController(ILogger<IngestionController> logger, 
+        public IngestionController(ILogger<IngestionController> logger,
             IFileDirectory fileDirectory)
         {
             _logger = logger;
             _fileDirectory = fileDirectory;
         }
-        
+
         [HttpPost]
         public IActionResult GenerateFile([FromQuery] int numRows = 100)
         {
@@ -48,7 +48,7 @@ namespace Ingestion.API.Controllers
 
             var files = Directory.EnumerateFiles(dataPath);
 
-            return Ok(new 
+            return Ok(new
             {
                 dataPath,
                 files

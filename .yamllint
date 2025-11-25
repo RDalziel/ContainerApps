@@ -25,7 +25,6 @@ rules:
     level: warning
   new-line-at-end-of-file: enable
   new-lines: enable
-  octet-stream: disable
   trailing-spaces: enable
   truthy:
     level: warning

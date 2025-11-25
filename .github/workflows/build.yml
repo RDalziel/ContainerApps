@@ -1,9 +1,9 @@
 name: CI
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 env:
   INGESTIONAPI_IMAGENAME: ingestion-api
@@ -81,11 +81,11 @@ jobs:
           push: true
           build-args: |
             version=${{ steps.tag.outputs.tag }}
-          tags: "${{ secrets.ACR_ENDPOINT }}/${{ env.MODELAPI_IMAGENAME }}:${{ steps.ContainerVersion.outputs.Version }}"          
+          tags: "${{ secrets.ACR_ENDPOINT }}/${{ env.MODELAPI_IMAGENAME }}:${{ steps.ContainerVersion.outputs.Version }}"
 
   deploy:
     runs-on: ubuntu-latest
-    needs: [ build ]
+    needs: [build]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -100,16 +100,13 @@ jobs:
         with:
           inlineScript: |
             az group create -g ${{ secrets.RESOURCE_GROUP }} -l uksouth
-            az deployment group create -g ${{ secrets.RESOURCE_GROUP }} -f ./deploy/main.bicep \
-             -p \
-                minReplicas=0 \
-                dotnetImage='${{ secrets.ACR_ENDPOINT }}/${{ env.INGESTIONAPI_IMAGENAME }}:${{needs.build.outputs.containerVersion}}' \
-                dotnetPort=5000 \
-                pythonImage='${{ secrets.ACR_ENDPOINT }}/${{ env.CALCULATIONAPI_IMAGENAME }}:${{needs.build.outputs.containerVersion}}' \
-                pythonPort=8000 \
-                rImage='${{ secrets.ACR_ENDPOINT }}/${{ env.MODELAPI_IMAGENAME }}:${{needs.build.outputs.containerVersion}}' \
-                rPort=8000 \
-                containerRegistry=${{ secrets.ACR_ENDPOINT }} \
-                containerRegistryUsername=${{ secrets.ACR_USERNAME }} \
-                containerRegistryPassword=${{ secrets.ACR_PASSWORD }}
-
+            az deployment group create -g ${{ secrets.RESOURCE_GROUP }} -f ./deploy/main.bicep -p minReplicas=0 \
+            dotnetImage='${{ secrets.ACR_ENDPOINT }}/${{ env.INGESTIONAPI_IMAGENAME }}:${{needs.build.outputs.containerVersion}}' \
+            dotnetPort=5000 \
+            pythonImage='${{ secrets.ACR_ENDPOINT }}/${{ env.CALCULATIONAPI_IMAGENAME }}:${{needs.build.outputs.containerVersion}}' \
+            pythonPort=8000 \
+            rImage='${{ secrets.ACR_ENDPOINT }}/${{ env.MODELAPI_IMAGENAME }}:${{needs.build.outputs.containerVersion}}' \
+            rPort=8000 \
+            containerRegistry=${{ secrets.ACR_ENDPOINT }} \
+            containerRegistryUsername=${{ secrets.ACR_USERNAME }} \
+            containerRegistryPassword=${{ secrets.ACR_PASSWORD }}
